@@ -71,6 +71,7 @@ class UsuariosController extends Controller
         $usuario->fill($request->all());
         $usuario->save();
         return redirect('usuarios');
+        //Comentario nuevo
     }
 
     /**

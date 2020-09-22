@@ -14,7 +14,7 @@ class UsuariosController extends Controller
     public function index()
     {
         //$usuarios = DB::table('usuario')->all();
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::where('USERACTIVO', 1)->get();
         return view('/usuarios/index', compact('usuarios'));
     }
 
@@ -71,7 +71,7 @@ class UsuariosController extends Controller
         $usuario->fill($request->all());
         $usuario->save();
         return redirect('usuarios');
-        //Comentario nuevo
+    
     }
 
     /**
@@ -80,7 +80,10 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        Usuario::destroy($id);
+        $usuario = Usuario::findOrFail($id);
+        $usuario->USERACTIVO = 0;
+        $usuario->save();
+
         return redirect('usuarios');
     }
 }

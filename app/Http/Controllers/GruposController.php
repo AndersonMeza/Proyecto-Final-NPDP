@@ -87,9 +87,18 @@ class GruposController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->GRUPO);
+        $opcion = $request->GRUPO;
+
         $grupo = Grupo::findOrFail($id);
-        $grupo->fill($request->all());
+        $grupo->GRUPONOMBRE = $request->GRUPONOMBRE;
+        if ($opcion == "NUEVO") {
+            $grupo->GRUPONUEVO = 1;
+            $grupo->GRUPOEXISTENTE = 0;
+        }
+        else {
+            $grupo->GRUPONUEVO = 0;
+            $grupo->GRUPOEXISTENTE = 1;
+        }
         $grupo->save();
         return redirect('grupos');
     }

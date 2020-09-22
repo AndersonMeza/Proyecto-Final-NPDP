@@ -18,5 +18,6 @@ class Usuario extends Model
         'USERFOTOGRAFIA',
         'USERFECHANACIMIENTO',
         'USERPASSWORD',
+        'USERACTIVO',
     ];
 }

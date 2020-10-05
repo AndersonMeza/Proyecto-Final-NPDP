@@ -26,6 +26,10 @@
         <input type="date" name="FECHANACIMIENTO" id="USERFECHANACIMIENTO" value="{{ $usuario->USERFECHANACIMIENTO }}" readonly>
         <br>
 
+        <label for="USERFECHANACIMIENTO">Fotografía: </label>
+        <img src="{{ asset('uploads/users/'.$usuario->USERFOTOGRAFIA)}}" alt="fotografía_usuario" height="250px" width="200px">
+        <br>
+
     <p>
         <a href="/usuarios" class="badge badge-primary" style="padding:15px; margin:15px auto">Regresar a la lista de usuarios</a>
     </p>

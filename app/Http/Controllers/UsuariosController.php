@@ -32,8 +32,16 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->hasFile('USERFOTOGRAFIA')) {
+            $file = $request->file('USERFOTOGRAFIA');
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path("uploads/users/"),$fileName);
+        }
+
         $usuario = new Usuario();
         $usuario->fill($request->all());
+        if ($request->hasFile('USERFOTOGRAFIA')) 
+            $usuario->USERFOTOGRAFIA = $fileName;
         $usuario->save();
         return redirect('usuarios');
     }
@@ -67,8 +75,16 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request->hasFile('USERFOTOGRAFIA')) {
+            $file = $request->file('USERFOTOGRAFIA');
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path("uploads/users/"),$fileName);
+        }
+
         $usuario = Usuario::findOrFail($id);
         $usuario->fill($request->all());
+        if ($request->hasFile('USERFOTOGRAFIA'))
+            $usuario->USERFOTOGRAFIA = $fileName;
         $usuario->save();
         return redirect('usuarios');
     
@@ -81,9 +97,8 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         $usuario = Usuario::findOrFail($id);
-        $usuario->USERACTIVO = 0;
         $usuario->save();
-
-        return redirect('usuarios');
+        $grupo->USUARIO = 0;
+        return redirect('usuarios'); 
     }
-}
+} 

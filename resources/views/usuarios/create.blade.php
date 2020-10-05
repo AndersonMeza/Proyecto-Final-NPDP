@@ -5,7 +5,7 @@
 <div class="container">
     <h1>Crear usuario</h1>
 
-    <form method="POST" action="/usuarios/store">
+    <form method="POST" action="/usuarios/store" enctype="multipart/form-data">
         @csrf
 
         <label for="USERNOMBRE">Nombre del usuario: </label>
@@ -29,7 +29,11 @@
         <br>
 
         <label for="USERFECHANACIMIENTO">Fecha de nacimiento del usuario: </label>
-        <input type="date" name="FECHANACIMIENTO" id="USERFECHANACIMIENTO">
+        <input type="date" name="USERFECHANACIMIENTO" id="USERFECHANACIMIENTO">
+        <br>
+
+        <label for="USERFOTOGRAFIA">Fotografía: </label>
+        <input type="file" name="USERFOTOGRAFIA" id="USERFOTOGRAFIA">
         <br>
 
         <button type="submit">Crear usuario</button>

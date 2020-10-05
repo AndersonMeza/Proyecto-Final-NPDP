@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Editar usuario</h1>
 
-    <form method="POST" action="/usuarios/update/{{ $usuario->USERID }}">
+    <form method="POST" action="/usuarios/update/{{ $usuario->USERID }}" enctype="multipart/form-data">
         @csrf
 
         <label for="USERNOMBRE">Nombre del usuario: </label>
@@ -24,8 +24,13 @@
         <br>
 
         <label for="USERFECHANACIMIENTO">Fecha de nacimiento del usuario: </label>
-        <input type="date" name="FECHANACIMIENTO" id="USERFECHANACIMIENTO" value="{{ $usuario->USERFECHANACIMIENTO }}">
+        <input type="date" name="USERFECHANACIMIENTO" id="USERFECHANACIMIENTO" value="{{ $usuario->USERFECHANACIMIENTO }}">
         <br>
+
+        <label for="USERFOTOGRAFIA">Fotografía: </label>
+        <img src="{{ asset('uploads/users/'.$usuario->USERFOTOGRAFIA)}}" alt="fotografía_usuario" height="250px" width="200px">
+        <br><input type="file" name="USERFOTOGRAFIA" id="USERFOTOGRAFIA">
+        <br><br>
 
         <button type="submit">Editar usuario</button>
     </form>

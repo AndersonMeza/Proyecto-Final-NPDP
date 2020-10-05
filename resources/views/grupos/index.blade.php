@@ -6,7 +6,7 @@
    <a href="/grupos/create" class="badge badge-primary" style="padding:15px; margin:15px auto">
       <i class="las la-plus-circle"></i> Añadir
    </a>
-   <table class="table table-bordered table-striped">
+   <table class="table table-bordered thead-dark>
       <table-head>
          <tr>
             <th scope="col">id</th>

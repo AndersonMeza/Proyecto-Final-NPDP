@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use App\Usuario;
+use App\User;
 
 class UsuariosController extends Controller
 {
@@ -14,7 +14,7 @@ class UsuariosController extends Controller
     public function index()
     {
         //$usuarios = DB::table('usuario')->all();
-        $usuarios = Usuario::where('USERACTIVO', 1)->get();
+        $usuarios = User::where('activo', 1)->get();
         return view('/usuarios/index', compact('usuarios'));
     }
 
@@ -32,16 +32,16 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('USERFOTOGRAFIA')) {
-            $file = $request->file('USERFOTOGRAFIA');
+        if ($request->hasFile('fotografia')) {
+            $file = $request->file('fotografia');
             $fileName = $file->getClientOriginalName();
             $file->move(public_path("uploads/users/"),$fileName);
         }
 
-        $usuario = new Usuario();
+        $usuario = new User();
         $usuario->fill($request->all());
-        if ($request->hasFile('USERFOTOGRAFIA')) 
-            $usuario->USERFOTOGRAFIA = $fileName;
+        if ($request->hasFile('fotografia')) 
+            $usuario->fotografia = $fileName;
         $usuario->save();
         return redirect('usuarios');
     }
@@ -52,8 +52,8 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        $usuario = Usuario::findOrFail($id);
-       // $usuario = Usuario::where('USERID', $id)->get();
+        $usuario = User::findOrFail($id);
+       // $usuario = User::where('USERID', $id)->get();
         return view('usuarios/show', compact('usuario'));
     }
 
@@ -63,8 +63,8 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        $usuario = Usuario::findOrFail($id);
-        // $usuario = Usuario::where('USERID', $id)->get();
+        $usuario = User::findOrFail($id);
+        // $usuario = User::where('USERID', $id)->get();
         return view('usuarios/edit', compact('usuario'));
     }
 
@@ -75,19 +75,19 @@ class UsuariosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->hasFile('USERFOTOGRAFIA')) {
-            $file = $request->file('USERFOTOGRAFIA');
+        if ($request->hasFile('fotografia')) {
+            $file = $request->file('fotografia');
             $fileName = $file->getClientOriginalName();
             $file->move(public_path("uploads/users/"),$fileName);
         }
 
-        $usuario = Usuario::findOrFail($id);
+        $usuario = User::findOrFail($id);
         $usuario->fill($request->all());
-        if ($request->hasFile('USERFOTOGRAFIA'))
-            $usuario->USERFOTOGRAFIA = $fileName;
+        if ($request->hasFile('fotografia'))
+            $usuario->fotografia = $fileName;
         $usuario->save();
-        return redirect('usuarios');
-    
+
+        return redirect('home');
     }
 
     /**
@@ -96,7 +96,7 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        $usuario = Usuario::findOrFail($id);
+        $usuario = User::findOrFail($id);
         $usuario->save();
         $grupo->USUARIO = 0;
         return redirect('usuarios'); 

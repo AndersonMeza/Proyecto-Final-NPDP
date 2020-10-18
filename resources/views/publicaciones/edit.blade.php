@@ -24,7 +24,7 @@
             <br>
 
             <label for="POSTFECHAENTREGA">Fecha de entrega: </label>
-            <input type="date" name="POSTFECHAENTREGA" id="POSTFECHAENTREGA"value="{{ $publicacion->POSTFECHAENTREGA }}">
+            <input type="datetime" name="POSTFECHAENTREGA" id="POSTFECHAENTREGA" value="{{ $publicacion->POSTFECHAENTREGA }}">
             <br>
 
             <button type="submit">Editar Publicación</button>

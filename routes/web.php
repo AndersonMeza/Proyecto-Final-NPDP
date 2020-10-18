@@ -35,6 +35,8 @@ Route::get('/grupos/show/{id}', 'GruposController@show');
 Route::get('/grupos/edit/{id}', 'GruposController@edit');
 Route::post('/grupos/update/{id}', 'GruposController@update');
 Route::get('/grupos/destroy/{id}', 'GruposController@destroy');
+Route::get('/grupos/join/{idGrupo}/{idUsuario}', 'GruposController@join');
+Route::get('/grupos/check/{idUsuario}/{op}', 'GruposController@check');
 
 
 Route::get('/publicaciones', 'PublicacionesController@index');
@@ -44,6 +46,7 @@ Route::get('/publicaciones/show/{id}', 'PublicacionesController@show');
 Route::get('/publicaciones/edit/{id}', 'PublicacionesController@edit');
 Route::post('/publicaciones/update/{id}', 'PublicacionesController@update');
 Route::get('/publicaciones/destroy/{id}', 'PublicacionesController@destroy');
+Route::post('/publicaciones/search', 'PublicacionesController@search');
 
 
 Route::get('/publicaciones_x_usuario', 'Publicaciones_x_UsuarioController@index');
@@ -53,3 +56,10 @@ Route::get('/publicaciones_x_usuario/show/{post}/{user}', 'Publicaciones_x_Usuar
 Route::get('/publicaciones_x_usuario/edit/{post}/{user}', 'Publicaciones_x_UsuarioController@edit');
 Route::post('/publicaciones_x_usuario/update/{post}/{user}', 'Publicaciones_x_UsuarioController@update');
 Route::get('/publicaciones_x_usuario/destroy/{post}/{user}', 'Publicaciones_x_UsuarioController@destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

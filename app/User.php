@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','curso','nivel','fotografia','nacimiento','active',
     ];
 
     /**
@@ -36,4 +36,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function grupos()
+    {
+        return $this->belongsToMany('App\Grupo', 'grupo_x_usuario', 'USERID', 'GRUPOID');
+    }
+
+    public function gxu()
+    {
+        return $this->hasMany('App\Grupo_x_Usuario', 'USERID');
+    }
 }

@@ -23,7 +23,7 @@
       <table-body>
       @foreach ($usuarios as $usuario)
          <tr>
-            <td>{{ $usuario->USERID }}</td>
+            <td>{{ $usuario->id }}</td>
             <td>{{ $usuario->USERNOMBRE }}</td>
             <td>{{ $usuario->USEREMAIL }}</td>
             <td>{{ $usuario->USERCURSO }}</td>

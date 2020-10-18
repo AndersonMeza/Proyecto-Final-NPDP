@@ -2,40 +2,40 @@
 
 @section('content')
 <div class="container">
-    <h1>Editar usuario</h1>
+    <h1>Editar Perfil</h1>
 
-    <form method="POST" action="/usuarios/update/{{ $usuario->USERID }}" enctype="multipart/form-data">
+    <form method="POST" action="/usuarios/update/{{ $usuario->id }}" enctype="multipart/form-data">
         @csrf
 
-        <label for="USERNOMBRE">Nombre del usuario: </label>
-        <input type="text" name="USERNOMBRE" id="USERNOMBRE" value="{{ $usuario->USERNOMBRE }}">
+        <label for="name">Nombre del usuario: </label>
+        <input type="text" name="name" id="name" value="{{ $usuario->name }}">
         <br>
 
-        <label for="USEREMAIL">Email del usuario: </label>
-        <input type="email" name="USEREMAIL" id="USEREMAIL" value="{{ $usuario->USEREMAIL }}">
+        <label for="email">Email del usuario: </label>
+        <input type="email" name="email" id="email" value="{{ $usuario->email }}">
         <br>
 
-        <label for="USERCURSO">Curso del usuario: </label>
-        <input type="text" name="USERCURSO" id="USERCURSO" value="{{ $usuario->USERCURSO }}">
+        <label for="curso">Curso del usuario: </label>
+        <input type="text" name="curso" id="curso" value="{{ $usuario->curso }}">
         <br>
 
-        <label for="USERNIVEL">Nivel del usuario: </label>
-        <input type="text" name="USERNIVEL" id="USERNIVEL" value="{{ $usuario->USERNIVEL }}">
+        <label for="nivel">Nivel del usuario: </label>
+        <input type="text" name="nivel" id="nivel" value="{{ $usuario->nivel }}">
         <br>
 
-        <label for="USERFECHANACIMIENTO">Fecha de nacimiento del usuario: </label>
-        <input type="date" name="USERFECHANACIMIENTO" id="USERFECHANACIMIENTO" value="{{ $usuario->USERFECHANACIMIENTO }}">
+        <label for="nacimiento">Fecha de nacimiento del usuario: </label>
+        <input type="date" name="nacimiento" value="{{ $usuario->nacimiento }}" max="{{ date('Y-m-d', strtotime('-7 year')) }}">
         <br>
 
-        <label for="USERFOTOGRAFIA">Fotografía: </label>
-        <img src="{{ asset('uploads/users/'.$usuario->USERFOTOGRAFIA)}}" alt="fotografía_usuario" height="250px" width="200px">
-        <br><input type="file" name="USERFOTOGRAFIA" id="USERFOTOGRAFIA">
+        <label for="fotografia">Fotografía: </label>
+        <img src="{{ asset('uploads/users/'.$usuario->fotografia)}}" alt="fotografía_usuario" height="200px" width="200px">
+        <br><input type="file" name="fotografia" id="fotografia">
         <br><br>
 
-        <button type="submit">Editar usuario</button>
+        <button type="submit">Editar</button>
     </form>
     <p>
-        <a href="/usuarios" class="badge badge-primary" style="padding:15px; margin:15px auto">Regresar a la lista de usuarios</a>
+        <a href="/home" class="badge badge-primary" style="padding:15px; margin:15px auto">Regresar</a>
     </p>
 </div>
 @endsection

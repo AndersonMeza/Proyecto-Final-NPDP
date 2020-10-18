@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Publicacion;
+use App\Public_x_Usuario;
 
 class PublicacionesController extends Controller
 {
@@ -29,31 +30,35 @@ class PublicacionesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $publicacion = date('Y-m-d h:m');
-        $entrega = $request->POSTFECHAENTREGA;
-
-        if ($entrega < $publicacion) 
-            return redirect('publicaciones/create');
-        else
-        {
-            $publicacion = new Publicacion();
-            $publicacion->POSTFECHAPUBLICACION = $publicacion;
-            $publicacion->fill($request->all());
-            $publicacion->save();
-            return redirect('publicaciones');
+        // Store Publicacion
+        if ($request->hasFile('POSTCONTENIDOMULTIMEDIA')) {
+            $file = $request->file('POSTCONTENIDOMULTIMEDIA');
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path("uploads/posts/"),$fileName);
         }
+
+        $publicacion = new Publicacion();
+        $publicacion->fill($request->all());
+        $publicacion->GRUPOID = session('id-grupo');
+        $publicacion->USERID = auth()->user()->id;
+        $publicacion->POSTFECHAPUBLICACION = date('Y-m-d h:m:s', strtotime('-1 day'));
+        $publicacion->save();
+
+        $post_id = DB::getPdo()->lastInsertId();
+
+        // Store Publicacion.Usuario
+        $pxu = new Public_x_Usuario;
+        $pxu->POSTID = $post_id;
+        $pxu->USERID = auth()->user()->id;
+        $pxu->PXUSAVANCE = $request->PXUSAVANCE;
+        $pxu->save();
+
+        return redirect('/grupos/show/'.session('id-grupo'));
     }
 
-    /**publicacion  *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $publicacion = Publicacion::findOrFail($id);
@@ -62,9 +67,6 @@ class PublicacionesController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
@@ -74,28 +76,30 @@ class PublicacionesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $publicacion = Publicacion::findOrFail($id);
         $publicacion->fill($request->all());
         $publicacion->save();
-        return redirect('publicaciones');
+        return redirect('/grupos/show/'.session('id-grupo'));
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         Publicacion::destroy($id);
-        return redirect('publicaciones');
+        return redirect('/grupos/show/'.session('id-grupo'));
+    }
+
+    public function search(Request $request)
+    {
+        $publicaciones = Publicacion::where([
+            ['GRUPOID', session('id-grupo')],
+            ['POSTTEXTO', 'like', '%'.$request->busqueda.'%']
+        ])->get();
+        return view('publicaciones/search', compact('publicaciones'));
     }
 }

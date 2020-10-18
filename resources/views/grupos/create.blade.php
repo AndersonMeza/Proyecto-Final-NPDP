@@ -1,32 +1,32 @@
 @extends('layouts.app')
 
-@section('title', 'Crear Grupo')
-
 @section('content')
 
-   <div class="container">
-      <h1>Crear Grupos</h1>
+   <div id="content" class="p-4 p-md-5 pt-5">
+      <h1>Crear Grupo</h1>
 
-         <form method="POST" action="/grupos/store">
+         <form method="POST" action="/grupos/store" enctype="multipart/form-data">
          @csrf           
             <label for="GRUPONOMBRE">Nombre del grupo: </label>
             <input type="text" name="GRUPONOMBRE" id="GRUPONOMBRE">
             <br>
 
-            <label for="GRUPONUEVO">¿Es un grupo nuevo? </label>
-            <input type="radio" name="GRUPO" id="GRUPONUEVO" value="nuevo">
+            <label for="GRUPODESC">Descripción: </label>
+            <input type="text" name="GRUPODESC" id="GRUPODESC">
             <br>
 
-            <label for="GRUPOEXISTENTE">¿El grupo ya existe? </label>
-            <input type="radio" name="GRUPO" id="GRUPOEXISTENTE" value="existente">
+            <label for="GRUPOFONDO">Fotografía: </label>
+            <input type="file" name="GRUPOFONDO" id="GRUPOFONDO">
             <br>
+
+            <input type="hidden" name="GRUPONUEVO" id="GRUPONUEVO" value="1">
+            <input type="hidden" name="GRUPOEXISTENTE" id="GRUPOEXISTENTE" value="0">
 
             <button type="submit">Crear grupo</button>
-         
          </form>
 
          <p>
-            <a href="/grupos" class="badge badge-primary" style="padding:15px; margin:15px auto"> Regresar a la lista de usuarios</a>
+            <a href="/home" class="badge badge-primary" style="padding:15px; margin:15px auto"> Regresar</a>
          </p>
    </div>
 

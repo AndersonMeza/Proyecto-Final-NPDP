@@ -51,11 +51,11 @@ Route::post('/publicaciones/search', 'PublicacionesController@search');
 
 Route::get('/publicaciones_x_usuario', 'Publicaciones_x_UsuarioController@index');
 Route::get('/publicaciones_x_usuario/create', 'Publicaciones_x_UsuarioController@create');
-Route::post('/publicaciones_x_usuario/store', 'Publicaciones_x_UsuarioController@store');
+Route::get('/publicaciones_x_usuario/store', 'Publicaciones_x_UsuarioController@store');
 Route::get('/publicaciones_x_usuario/show/{post}/{user}', 'Publicaciones_x_UsuarioController@show');
-Route::get('/publicaciones_x_usuario/edit/{post}/{user}', 'Publicaciones_x_UsuarioController@edit');
-Route::post('/publicaciones_x_usuario/update/{post}/{user}', 'Publicaciones_x_UsuarioController@update');
-Route::get('/publicaciones_x_usuario/destroy/{post}/{user}', 'Publicaciones_x_UsuarioController@destroy');
+Route::get('/publicaciones_x_usuario/edit/{post}', 'Publicaciones_x_UsuarioController@edit');
+Route::post('/publicaciones_x_usuario/update/{post}', 'Publicaciones_x_UsuarioController@update');
+Route::get('/publicaciones_x_usuario/destroy/{post}', 'Publicaciones_x_UsuarioController@destroy');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

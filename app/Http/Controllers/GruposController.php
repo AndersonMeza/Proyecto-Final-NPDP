@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
+use App\User;
 use App\Grupo;
 use App\Grupo_x_Usuario;
 
@@ -18,15 +19,17 @@ class GruposController extends Controller
      */
     public function index()
     {
-        $grupos=Grupo::all();
-        foreach ($grupos as $grupo)
+        $grupos = Grupo::all();
+        foreach ($grupos as $key => $grupo)
             foreach ($grupo->uxg as $usuario)
-                if ($usuario->GXUROL == 1)
-                    foreach ($grupo->usuarios as $user)
-                        if ($user->id == $usuario->USERID)
-                                $grupo->admin = $user->name;
-        return view('/grupos/index', compact('grupos'));
+            { 
+                if ($usuario->USERID == auth()->user()->id) // Si un usuario solicia, pertenece o esta betado de un grupo no aparecera
+                    unset($grupos[$key]);
+                if($usuario->GXUROL == 1)
+                    $grupo->admin = User::find($usuario->USERID)->name;
+            }
 
+        return view('/grupos/index', compact('grupos'));
     }
 
     /**
@@ -158,7 +161,7 @@ class GruposController extends Controller
             'USERID' => $idu,
         ]);
         
-        return redirect('grupos')->with('status', 'Solicitud Enviada');
+        return redirect('home')->with('status', 'Solicitud Enviada');
     }
 
     public function check($idu, $op)

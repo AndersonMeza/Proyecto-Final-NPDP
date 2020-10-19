@@ -63,7 +63,7 @@
             }
         </style>
     </head>
-    <body>
+    <body style="background-image: url({{ asset('uploads/images/Fondo.jpg')}});">
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -81,14 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                FRIENDS
-                </div>
-
-                <div class="links">
-                    <a href="/usuarios">Usuarios</a>
-                    <a href="/grupos">Grupos</a>
-                    <a href="/publicaciones">Publicaciones</a>
-                    <a href="/publicaciones_x_usuario"> Publicaciones por Usuarios</a>                  
+                    <a href="/home" style="padding: 10vw; text-decoration: none"> </a>
                 </div>
             </div>
         </div>

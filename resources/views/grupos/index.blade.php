@@ -23,5 +23,9 @@
       @endforeach
       </table-body>
    </table>
+
+   <p>
+      <a href="/home" class="badge badge-primary" style="padding:15px; margin:15px auto"> Regresar</a>
+   </p>
 </div>
 @endsection

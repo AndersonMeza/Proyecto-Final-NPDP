@@ -79,9 +79,19 @@
             <div class="card-footer text-muted">
 					<div class="row">
 						<div class="col-sm-6">
-							@foreach ($publicacion->pxu as $pu)
-								Calificación -> {{ $pu->PXUSCALIFICACION }}
-							@endforeach
+                     @php
+                        $calificacion = 0;
+                        $contador = 0;
+                        foreach ($publicacion->pxu as $pu)
+                        {
+                           $calificacion += $pu->PXUSCALIFICACION;
+                           $contador++;
+                        }
+                        echo ('Calificación -> ');
+                        $calificacion = round($calificacion/$contador, 1);
+                        for ($i=0; $i<$calificacion; $i++)
+                           echo ("<span class='fa fa-star checked' style='color:orange'></span>");
+                     @endphp
 						</div>
 						<div class="col-sm-6 text-sm-right"> Fecha de Entrega: {{ $publicacion->POSTFECHAENTREGA }}</div>
 					</div>
@@ -92,21 +102,44 @@
                   <input type="range" class="form-control-range col-sm-10" value="{{ $pu->PXUSAVANCE}}" min="0" max="10">
                </div>
             </div>
-         </div>
-         @if (count($publicacion->pxu) > 0) 
-            <div class="card">
+         </div> 
+
+         <!----- Comentario ----->
+         <div class="card">
                <div class="card-header">
                   Comentarios
                </div>
-               @foreach ($publicacion->pxu as $comentario)
-                  @if ($comentario->PXUSCOMENTARIO != '') 
-                     <div class="card-body">
-                        <p class="card-text">{{ $comentario->PXUSCOMENTARIO }}</p>
+               <div class="card-body">
+                  <form action="/publicaciones_x_usuario/store" method="get">
+                     <div class="form-group">
+                        <div class="row">
+                           <input type="text" class="form-control kinput col-sm-10" name="comentario" placeholder="Comentario...">
+                           <input type="hidden" name="publicacion" value="{{ $publicacion->POSTID }}">
+                           <input type="hidden" name="grupo" value="{{ $grupo->GRUPOID }}">
+                           <button type="submit" class="btn btn-primary col-sm-2">Comentar</button>
+                        </div>
                      </div>
-                  @endif
-               @endforeach
+                  </form>
+               </div>
+               @if ($publicacion->POSTCOMENTARIOS == 1) 
+                  @foreach ($publicacion->pxu as $comentario)
+                     @if ($comentario->PXUSCOMENTARIO != '') 
+                        <div class="card-body"> 
+                           <div class="row">
+                              <div class="col-sm-6">{{ $comentario->PXUSCOMENTARIO }}</div>
+                              @if (( Auth::user()->id == session('id-admin') )  ||  ( Auth::user()->id == $publicacion->autor->id ))
+                                 <div class="col-sm-6 text-sm-right">
+                                    <a href="/publicaciones_x_usuario/edit/{{ $comentario->id }}"><i class="las la-pen-alt"></i></a>
+                                    <a href="/publicaciones_x_usuario/destroy/{{ $comentario->id }}"><i class="lar la-trash-alt"></i></a>
+                                 </div>
+                              @endif
+                           </div>
+                        </div>
+                     @endif
+                  @endforeach
+               @endif
             </div>
-         @endif
+            <!----- Comentario ----->
       @endforeach
    @else
       <label for="GRUPOEXISTENTE">Has creado un nuevo grupo!</label>

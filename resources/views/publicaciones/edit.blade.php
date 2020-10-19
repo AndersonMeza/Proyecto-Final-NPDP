@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div id="content" class="p-4 p-md-5 pt-5">
         <h1>Editar Publicaciones</h1>
 
         <form method="POST" action="/publicaciones/update/{{ $publicacion->POSTID }}">
@@ -15,8 +15,8 @@
             <input type="datetime-local" name="POSTFECHAPUBLICACION" id="POSTFECHAPUBLICACION"value="{{ $publicacion->POSTFECHAPUBLICACION }}" readonly>
             <br>
 
-            <label for="POSTCOMENTARIOS">Comentarios: </label>
-            <input type="checkbox" name="POSTCOMENTARIOS" id="POSTCOMENTARIOS"value="{{ $publicacion->POSTCOMENTARIOS }}">
+            <label for="POSTCOMENTARIO">Comentarios: </label>
+            <input type="checkbox" name="POSTCOMENTARIO" id="POSTCOMENTARIO" value="{{ $publicacion->POSTCOMENTARIOS }}" {{ old('type', $publicacion->POSTCOMENTARIOS) === 1 ? 'checked' : '' }}>
             <br>
 
             <label for="POSTADVERTENCIA">¡Advertencia!: </label>
@@ -32,7 +32,7 @@
         </form>
 
         <p>
-        <a href="/publicaciones" class="badge badge-primary" style="padding:15px; margin:15px auto">Regresar a la lista de Publicaciones</a>
+        <a href="/grupos/show/{{ session('id-grupo') }}" class="badge badge-primary" style="padding:15px; margin:15px auto">Regresar</a>
             
         </p>
     </div>

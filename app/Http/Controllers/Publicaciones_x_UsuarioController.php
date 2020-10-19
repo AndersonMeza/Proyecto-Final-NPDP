@@ -41,17 +41,21 @@ class Publicaciones_x_UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $publicaciones_x_usuarios = new Public_x_Usuario();
-        $publicaciones_x_usuarios->fill($request->all());
-        $publicaciones_x_usuarios->save();
-        return redirect('publicaciones_x_usuario');
+        Public_x_Usuario::insert([
+            'PXUSCOMENTARIO' => $request->comentario,
+            'USERID' => auth()->user()->id,
+            'POSTID' => $request->publicacion,
+        ]);
+
+        $publicacion = Publicacion::find($request->publicacion);
+        $publicacion->POSTCOMENTARIOS = 1;
+        $publicacion->save();
+
+        return redirect('grupos/show/'.$request->grupo);
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function show($post,$user)
     {
@@ -61,42 +65,29 @@ class Publicaciones_x_UsuarioController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($post, $user)
+    public function edit($id)
     {
-        $publicaciones_x_usuarios = Public_x_Usuario::where([['POSTID', $post],['USERID',$user]])->get();
-        return view('publicaciones_x_usuario/edit', compact('publicaciones_x_usuarios'));
+        $pub = Public_x_Usuario::find($id);
+        return view('publicaciones_x_usuario/edit', compact('pub'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $post, $user)
+    public function update(Request $request, $id)
     {
-        $publicaciones_x_usuarios = Public_x_Usuario::where([['POSTID', $post],['USERID',$user]])->get();
-        
-        foreach ($publicaciones_x_usuarios as $pub)
-            $pub->update($request->all());
-
-        return redirect('publicaciones_x_usuario');
+        $pub = Public_x_Usuario::find($id);
+        $pub->update($request->all());
+        return redirect('/grupos/show/'.session('id-grupo'));
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($post, $user)
+    public function destroy($id)
     {
-        Public_x_Usuario::where([['POSTID', $post],['USERID',$user]])->delete();
-        return redirect('publicaciones_x_usuario');
+        Public_x_Usuario::find($id)->delete();
+        return redirect('/grupos/show/'.session('id-grupo'));
     }
 }

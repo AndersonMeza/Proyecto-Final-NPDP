@@ -17,6 +17,7 @@
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
+                min-height: 500px;
                 margin: 0;
             }
 
@@ -61,12 +62,23 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            
+            .fondo {
+                background-image: url("{{ asset('uploads/images/definitivo.jpg') }}");
+                  /* Full height */
+                height: 100%;
+
+                /* Center and scale the image nicely */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
         </style>
     </head>
-    <body style="background-image: url({{ asset('uploads/images/Fondo.jpg')}});">
+    <body class="fondo">
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
-                <div class="top-right links">
+                <div class="top-right links" style="margin: 20px">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
@@ -80,9 +92,6 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    <a href="/home" style="padding: 10vw; text-decoration: none"> </a>
-                </div>
             </div>
         </div>
     </body>

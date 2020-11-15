@@ -12,11 +12,11 @@
             <br>
 
             <label for="POSTFECHAPUBLICACION">Fecha de publicación: </label>
-            <input type="datetime-local" name="POSTFECHAPUBLICACION" id="POSTFECHAPUBLICACION"value="{{ $publicacion->POSTFECHAPUBLICACION }}" readonly>
+            <input type="datetime-local" name="POSTFECHAPUBLICACION" id="POSTFECHAPUBLICACION" value="{{ $publicacion->POSTFECHAPUBLICACION }}" readonly>
             <br>
 
-            <label for="POSTCOMENTARIO">Comentarios: </label>
-            <input type="checkbox" name="POSTCOMENTARIO" id="POSTCOMENTARIO" value="{{ $publicacion->POSTCOMENTARIOS }}" {{ old('type', $publicacion->POSTCOMENTARIOS) === 1 ? 'checked' : '' }}>
+            <label for="POSTCOMENTARIOS">Comentarios: </label>
+            <input type="checkbox" name="POSTCOMENTARIOS" id="POSTCOMENTARIOS" {{ $publicacion->POSTCOMENTARIOS === 1 ? 'checked' : '' }}>
             <br>
 
             <label for="POSTADVERTENCIA">¡Advertencia!: </label>

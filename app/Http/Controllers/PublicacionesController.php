@@ -79,8 +79,14 @@ class PublicacionesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $valor = $request->POSTCOMENTARIOS;
         $publicacion = Publicacion::findOrFail($id);
         $publicacion->fill($request->all());
+        if ($valor == null)
+            $publicacion->POSTCOMENTARIOS = 0;
+        else
+            $publicacion->POSTCOMENTARIOS = 1;
+
         $publicacion->save();
         return redirect('/grupos/show/'.session('id-grupo'));
     }

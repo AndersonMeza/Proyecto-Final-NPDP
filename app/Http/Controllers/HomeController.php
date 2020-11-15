@@ -26,9 +26,17 @@ class HomeController extends Controller
     {
         $usuario = User::find(auth()->user()->id); 
         $publicaciones = array();
+        $userid = auth()->user()->id;
         foreach ($usuario->grupos as $grupo)
-            foreach ($grupo->publicaciones as $publicacion)
-                $publicaciones[] = $publicacion;
+        {   
+            $flag = false;
+            foreach ($grupo->uxg as $usuario)
+                if (($usuario->USERID == $userid) && ($usuario->GXUSOLICITUD == 1))
+                    $flag = true; // Usuario ha sido aceptado en el grupo
+            if ($flag)
+                foreach ($grupo->publicaciones as $publicacion)
+                    $publicaciones[] = $publicacion;
+        }
 
         $publicaciones = array_reverse($publicaciones);  
 

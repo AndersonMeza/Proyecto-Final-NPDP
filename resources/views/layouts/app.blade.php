@@ -26,10 +26,10 @@
 </head>
 <body>
 	<div id="app">
-		<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+		<nav class="navbar navbar-expand-md navbar-light shadow-sm navfondo">
 			<div class="container">
 				<a class="navbar-brand" href="{{ url('/home') }}">
-					Friends
+				<i class="las la-graduation-cap"style="font-size: 23px;"></i>Friends
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
 					<span class="navbar-toggler-icon"></span>
@@ -56,7 +56,7 @@
 						@else
 								<li class="nav-item dropdown">
 									<a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-										{{ Auth::user()->name }}
+									<i class="las la-power-off"></i>{{ Auth::user()->name }}
 									</a>
 
 									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -78,29 +78,32 @@
 		</nav>
 
 			@auth
-			<div class="wrapper d-flex align-items-stretch">
-				
-				<nav id="sidebar">
-					<div class="img bg-wrap text-center py-4" style="background-image: url({{ asset('uploads/images/bg_1.jpg') }});">
+			<div class="wrapper d-flex align-items-stretch ">
+				<div class="sidebar">
+					<div class="img bg-wrap text-center py-4 " style="background-image: url({{ asset('uploads/images/bg_1.jpg') }});">
 						<div class="user-logo">
 							<div class="img" style="background-image: url({{ asset('uploads/users/'.Auth::user()->fotografia)}});"></div>
 							<h3>{{ Auth::user()->name }}</h3>	
 						</div>
 					</div>
-					<ul class="list-unstyled components mb-5">
-						<li class="active"><a>{{ Auth::user()->email }}</a></li>
-						<li class="active"><a>{{ Auth::user()->curso }}</a></li>
-						<li class="active"><a>Nivel {{ Auth::user()->nivel }}</a></li>
-						<li class="active"><a>{{ Auth::user()->nacimiento }}</a></li>
-						<li class="active"><a href="/usuarios/edit/{{ Auth::user()->id }}">Editar Perfil</a></li>
+					<ul class="list-unstyled components mb-5 " >
+						<li class=" "><a>{{ Auth::user()->email }}</a></li>
+						<li class=" "><a>{{ Auth::user()->curso }}</a></li>
+						<li class=""><a>Nivel {{ Auth::user()->nivel }}</a></li>
+						<li class=""><a>{{ Auth::user()->nacimiento }}</a></li>
+						<li>
+							<a class="btn btn-primary my-button"style="font-size: 14px" href="/usuarios/edit/{{ Auth::user()->id }}">
+								<i class="las la-pen-alt"></i> Editar Perfil
+							</a>
+						</li>
 					</ul>
-				</nav>
+				</div>
 
 				<main class="py-4 main">
 					@yield('content')
 				</main>
 
-				<div class="sidebar">
+				<div class="sidebar ">
 					@if (session('foto-grupo'))
 						<div class="img bg-wrap text-center py-4" style="background-image: url({{ asset('uploads/grupos/'.session('foto-grupo'))}});">
 							<div class="user-logo">
@@ -117,7 +120,6 @@
 					
 					<ul class="list-unstyled components mb-5">
 						<li class="active">
-							
 							<a href="/grupos"><span class="fa fa-home mr-3 las la-search"></span>Buscar</a>
 						</li>
 						@foreach(Auth::user()->grupos as $grupo)
@@ -137,6 +139,7 @@
 				@yield('content')
 			</main>
 			@endauth
+
 	</div>
 </body>
 </html>

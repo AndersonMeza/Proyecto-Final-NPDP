@@ -3,12 +3,11 @@
 @section('content')   
    
    <div class="container">
-      <div class="card">
+      <div class="card" style=" width: 600px;">
          <div class="card-header">
-            Editar Grupo
+             <i class="las la-pen-alt"></i> {{ __('Editar Grupo') }}</>  
          </div>
-
-         <div class="card-body">
+         <div class="cardbody">
             <form method="POST" action="/grupos/update/{{ $grupo->GRUPOID }}" enctype="multipart/form-data">
                @csrf           
                <label for="GRUPONOMBRE">Nombre del grupo: </label>
@@ -24,7 +23,9 @@
                <br><input type="file" name="GRUPOFONDO" id="GRUPOFONDO">
                <br><br>
 
-               <button type="submit">Editar grupo</button>
+               <button class="formaboton badge badge-primary " type="submit">             
+                   <i class="las la-save"></i> Guardar
+               </button>
             </form>
          </div>
 
@@ -59,11 +60,12 @@
             </table>
          </div>
          @endif
-
-      </div>
-      <p>
-         <a href="/grupos/show/{{ session('id-grupo') }}" class="badge badge-primary" style="padding:15px; margin:15px auto"> Regresar</a>
+         <p class="cardbody">
+         <a href="/grupos/show/{{ session('id-grupo') }}" class="badge badge-primary" style="padding:13px; margin:30px; margin-left:460px">
+            <i class="las la-chevron-left"></i> Regresar
+         </a>        
       </p>
    </div>
+</div>
+   @endsection
 
-@endsection

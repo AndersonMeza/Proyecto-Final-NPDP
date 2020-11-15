@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // Rutas para Usuarios
 //Route::resource('usuarios', 'UsuariosController');
 Route::get('/usuarios', 'UsuariosController@index');
@@ -32,11 +33,15 @@ Route::get('/grupos', 'GruposController@index');
 Route::get('/grupos/create', 'GruposController@create');
 Route::post('/grupos/store', 'GruposController@store');
 Route::get('/grupos/show/{id}', 'GruposController@show');
+Route::get('/grupos/prueba/{id}', 'GruposController@show');
+
+
 Route::get('/grupos/edit/{id}', 'GruposController@edit');
 Route::post('/grupos/update/{id}', 'GruposController@update');
 Route::get('/grupos/destroy/{id}', 'GruposController@destroy');
 Route::get('/grupos/join/{idGrupo}/{idUsuario}', 'GruposController@join');
 Route::get('/grupos/check/{idUsuario}/{op}', 'GruposController@check');
+Route::get('/grupos/out/{id}', 'GruposController@out');
 
 
 Route::get('/publicaciones', 'PublicacionesController@index');
@@ -47,6 +52,7 @@ Route::get('/publicaciones/edit/{id}', 'PublicacionesController@edit');
 Route::post('/publicaciones/update/{id}', 'PublicacionesController@update');
 Route::get('/publicaciones/destroy/{id}', 'PublicacionesController@destroy');
 Route::post('/publicaciones/search', 'PublicacionesController@search');
+
 
 
 Route::get('/publicaciones_x_usuario', 'Publicaciones_x_UsuarioController@index');

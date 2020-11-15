@@ -37,11 +37,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // Consulta los grupos a los que pertenece un usuario
     public function grupos()
     {
         return $this->belongsToMany('App\Grupo', 'grupo_x_usuario', 'USERID', 'GRUPOID');
     }
 
+    // Consulta registros en la tabla intermedia
     public function gxu()
     {
         return $this->hasMany('App\Grupo_x_Usuario', 'USERID');

@@ -24,9 +24,24 @@
          <div class="card-footer text-muted">
             <div class="row">
                <div class="col-sm-6">
-                  @foreach ($publicacion->pxu as $pu)
-                     Calificación -> {{ $pu->PXUSCALIFICACION }}
-                  @endforeach
+                  @php
+                     $calificacion = 0;
+                     $contador = 0;
+                     foreach ($publicacion->pxu as $pu)
+                     {
+                        $calificacion += $pu->PXUSCALIFICACION;
+                        $contador++;
+                     }
+                     echo ('Calificación -> ');
+
+                     if ($contador > 0)
+                        $calificacion = round($calificacion/$contador, 1);
+                     else
+                        echo ("<span class='fa fa-star'></span>");
+
+                     for ($i=0; $i<$calificacion; $i++)
+                        echo ("<span class='fa fa-star checked' style='color:orange'></span>");
+                  @endphp
                </div>
                <div class="col-sm-6 text-sm-right"> Fecha de Entrega: {{ $publicacion->POSTFECHAENTREGA }}</div>
             </div>

@@ -21,21 +21,37 @@
             <div class="card-footer text-muted">
 					<div class="row">
 						<div class="col-sm-6">
-							@foreach ($publicacion->pxu as $pu)
-								Calificación -> {{ $pu->PXUSCALIFICACION }}
-							@endforeach
+                     @php
+                        $calificacion = 0;
+                        $contador = 0;
+                        foreach ($publicacion->pxu as $pu)
+                        {
+                           $calificacion += $pu->PXUSCALIFICACION;
+                           $contador++;
+                        }
+                        echo ('Calificación -> ');
+
+                        if ($contador > 0)
+                           $calificacion = round($calificacion/$contador, 1);
+                        else
+                           echo ("<span class='fa fa-star'></span>");
+
+                        for ($i=0; $i<$calificacion; $i++)
+                           echo ("<span class='fa fa-star checked' style='color:orange'></span>");
+                     @endphp
 						</div>
 						<div class="col-sm-6 text-sm-right">{{ $publicacion->POSTFECHAENTREGA }}</div>
 					</div>
             </div>
             <div class="card-footer text-muted">
-               <input type="range" class="form-control-range" value="{{ $pu->PXUSAVANCE}}" min="0" max="10">
+               <input type="range" class="form-control-range" value="{{ $pu->PXUSAVANCE}}" min="0" max="10" disabled="true">
             </div>
          </div>
       @endforeach
 	@else
 		<p>Prueba unirte a un grupo o creo otro nuevo para ver más contenido.</p>
    @endif
+   <publicaciones-component></publicaciones-component>
 	</div>
 
 @endsection

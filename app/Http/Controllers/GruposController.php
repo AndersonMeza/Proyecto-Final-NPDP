@@ -94,16 +94,23 @@ class GruposController extends Controller
         session()->put('foto-grupo', $grupo->GRUPOFONDO);
         
         session()->forget('id-admin');
+        session()->forget('flag-pertenece');
+        
+        $userid = auth()->user()->id;
         foreach ($grupo->uxg as $usuario)
+        {
             if ($usuario->GXUROL == 1)
                 session()->put('id-admin', $usuario->USERID);
+            if (($usuario->USERID == $userid) && ($usuario->GXUSOLICITUD == 1))
+                session()->put('flag-pertenece', true);            
+        }
         
         $publicaciones = array();
         foreach ($grupo->publicaciones as $publicacion)
             $publicaciones[] = $publicacion;
         $publicaciones = array_reverse($publicaciones);  
 
-        return view('grupos/show', compact('grupo', 'publicaciones'));
+        return view('grupos/prueba', compact('grupo', 'publicaciones'));
     }
 
     /**
@@ -172,5 +179,32 @@ class GruposController extends Controller
         ])->update(['GXUSOLICITUD' => $op]);
         
         return redirect('grupos/edit/'.session('id-grupo'))->with('status', 'Solicitud Enviada');
+    }
+
+    public function out($idgrupo) // Salida de grupo
+    {
+        $idUser =  auth()->user()->id;
+
+        $gxu = Grupo_x_Usuario::firstWhere([
+            ['USERID', $idUser],
+            ['GRUPOID', $idgrupo],
+        ]);
+
+        $rol = $gxu->GXUROL;
+        $gxu->delete();
+
+        if ($rol == 1) // Siel usuario que acaba de salir era administrador
+        {
+            $gu = Grupo_x_Usuario::firstWhere([
+                ['GRUPOID', $idgrupo],
+                ['GXUSOLICITUD', 1]]);
+
+            if ($gu != null)
+                $gu->update(['GXUROL' => 1]);
+            else
+                Grupo::destroy($idgrupo);
+        }
+        
+        return redirect('home')->with('status', 'Has salido del grupo!');
     }
 }
